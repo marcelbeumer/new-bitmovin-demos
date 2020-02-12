@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script
+      type="text/javascript"
+      src="https://cdn.bitmovin.com/player/web/8.28.0/bitmovinplayer.js"
+    ></script>
+
+    <div id="player-container"></div>
+
+    <script>
+      var conf = {
+        key: localStorage.getItem('bitmovin-key')
+      };
+
+      var source = {
+        hls: 'https://bitmovin-a.akamaihd.net/content/art-of-motion_drm/m3u8s/DOES_NOT_EXIST.m3u8'
+      };
+
+      var player;
+
+      function createPlayer() {
+        var playerContainer = document.getElementById('player-container');
+        var time = Date.now();
+        player = new bitmovin.player.Player(playerContainer, conf);
+        console.log(`create bitmovin took ${Date.now() - time}`);
+
+        player.load(source).catch(e => {
+          if (e === null) alert('player.load rejected with null')
+        })
+      }
+
+      createPlayer();
+    </script>
+  </body>
+</html>
